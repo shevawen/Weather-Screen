@@ -38,6 +38,7 @@ npm install
 
 ## Preview
 
+![ScreenShot](/preview.png)
 
 ## Data Source
 
@@ -61,6 +62,8 @@ npm install
 ```
 
 ## 预览
+
+![ScreenShot](/preview.png)
 
 ## 数据源
 
