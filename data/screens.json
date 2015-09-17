@@ -1,0 +1,194 @@
+[
+  [
+    {
+      "name" :"北京",
+      "card_positon" : "t"
+    },{
+      "name" :"天津",
+      "card_positon" : "b"
+    },{
+      "name" :"石家庄",
+      "card_positon" : "b"
+    },{
+      "name" :"太原",
+      "card_positon" : "t"
+    },{
+      "name" :"济南",
+      "card_positon" : "t"
+    },{
+      "name" :"呼和浩特",
+      "card_positon" : "b"
+    }
+  ],[
+    {
+      "name" :"北京",
+      "card_positon" : "t"
+    },{
+      "name" :"沈阳",
+      "card_positon" : "b"
+    },{
+      "name" :"长春",
+      "card_positon" : "b"
+    },{
+      "name" :"哈尔滨",
+      "card_positon" : "b"
+    }
+  ],[
+    {
+      "name" :"南京",
+      "card_positon" : "t"
+    },{
+      "name" :"合肥",
+      "card_positon" : "b"
+    },{
+      "name" :"上海",
+      "card_positon" : "t"
+    },{
+      "name" :"杭州",
+      "card_positon" : "b"
+    },{
+      "name" :"郑州",
+      "card_positon" : "b"
+    },{
+      "name" :"武汉",
+      "card_positon" : "t"
+    },{
+      "name" :"长沙",
+      "card_positon" : "t"
+    },{
+      "name" :"南昌",
+      "card_positon" : "t"
+    }
+  ]
+  ,
+  [
+    {
+      "name" :"台北",
+      "card_positon" : "b"
+    },{
+      "name" :"福州",
+      "card_positon" : "t"
+    },{
+      "name" :"广州",
+      "card_positon" : "t"
+    },{
+      "name" :"香港",
+      "card_positon" : "t"
+    },{
+      "name" :"澳门",
+      "card_positon" : "b"
+    },{
+      "name" :"南宁",
+      "card_positon" : "t"
+    },{
+      "name" :"海口",
+      "card_positon" : "b"
+    }
+  ]
+  ,
+  [{
+      "name" :"贵阳",
+      "card_positon" : "b"
+    },{
+      "name" :"昆明",
+      "card_positon" : "b"
+    },{
+      "name" :"成都",
+      "card_positon" : "t"
+    },{
+      "name" :"重庆",
+      "card_positon" : "b"
+    },{
+      "name" :"拉萨",
+      "card_positon" : "b"
+    }
+  ],[
+    {
+      "name" :"银川",
+      "card_positon" : "t"
+    },{
+      "name" :"西安",
+      "card_positon" : "t"
+    },{
+      "name" :"兰州",
+      "card_positon" : "b"
+    },{
+      "name" :"乌鲁木齐",
+      "card_positon" : "b"
+    },{
+      "name" :"西宁",
+      "card_positon" : "t"
+    }
+  ],[
+    {
+      "name" :"乌海",
+      "card_positon" : "t"
+    },{
+      "name" :"阿左旗",
+      "card_positon" : "t"
+    },{
+      "name" :"东胜",
+      "card_positon" : "b"
+    },{
+      "name" :"包头",
+      "card_positon" : "t"
+    },{
+      "name" :"呼和浩特",
+      "card_positon" : "b"
+    },{
+      "name" :"临河",
+      "card_positon" : "t"
+    },{
+      "name" :"集宁",
+      "card_positon" : "t"
+    },{
+      "name" :"二连浩特",
+      "card_positon" : "b"
+    }
+  ],[
+    {
+      "name" :"锡林浩特",
+      "card_positon" : "t"
+    },{
+      "name" :"通辽",
+      "card_positon" : "t"
+    },{
+      "name" :"赤峰",
+      "card_positon" : "t"
+    },{
+      "name" :"乌兰浩特",
+      "card_positon" : "b"
+    },{
+      "name" :"海拉尔",
+      "card_positon" : "b"
+    },{
+      "name" :"满洲里",
+      "card_positon" : "t"
+    }
+  ],[
+    {
+      "name" :"London,United Kingdom",
+      "card_positon" : "b"
+    },{
+      "name" :"Ulan Bator",
+      "card_positon" : "t"
+    },{
+      "name" :"纽约",
+      "card_positon" : "t"
+    },{
+      "name" :"Buenos Aires",
+      "card_positon" : "t"
+    },{
+      "name" :"东京",
+      "card_positon" : "b"
+    },{
+      "name" :"开普敦",
+      "card_positon" : "b"
+    },{
+      "name" :"新德里",
+      "card_positon" : "b"
+    },{
+      "name" :"莫斯科",
+      "card_positon" : "t"
+    }]
+]

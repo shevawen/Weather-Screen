@@ -1,0 +1,110 @@
+{
+  "100":{
+    "day" : "02",
+    "night" : "03",
+    "text" : "Sunny",
+    "text_cn" : "晴"
+  },
+  "101":{
+    "day" : "08",
+    "night" : "09",
+    "text" : "Cloudy",
+    "text_cn" : "多云"
+  },
+  "102":{
+    "day" : "08",
+    "night" : "09",
+    "text" : "Few Clouds",
+    "text_cn" : "少云"
+  },
+  "103":{
+    "day" : "08",
+    "night" : "09",
+    "text" : "Partly Cloudy",
+    "text_cn" : "晴间多云"
+  },
+  "104":{
+    "day" : "14",
+    "night" : "14",
+    "text" : "Overcast",
+    "text_cn" : "阴"
+  },
+  "200":{
+    "day" : "14",
+    "night" : "14",
+    "text" : "Windy",
+    "text_cn" : "有风"
+  },
+  "201":{
+    "day" : "06",
+    "night" : "06",
+    "text" : "Calm",
+    "text_cn" : "平静"
+  },
+  "202":{
+    "day" : "06",
+    "night" : "06",
+    "text" : "Light Breeze",
+    "text_cn" : "微风"
+  },
+  "203":{
+    "day" : "06",
+    "night" : "06",
+    "text" : "Moderate",
+    "text_cn" : "和风"
+  },
+  "204":{
+    "day" : "06",
+    "night" : "06",
+    "text" : "Fresh Breeze",
+    "text_cn" : "清风"
+  },
+  "205":{
+    "day" : "06",
+    "night" : "06",
+    "text" : "Strong Breeze",
+    "text_cn" : "强风"
+  },
+  "300":{
+    "day" : "17",
+    "night" : "17",
+    "text" : "Shower Rain",
+    "text_cn" : "阵雨"
+  },
+  "301":{
+    "day" : "17",
+    "night" : "17",
+    "text" : "Heavy Shower Rain",
+    "text_cn" : "强阵雨"
+  },
+  "305":{
+    "day" : "17",
+    "night" : "17",
+    "text" : "Light Rain",
+    "text_cn" : "小雨"
+  },
+  "306":{
+    "day" : "18",
+    "night" : "18",
+    "text" : "Moderate Rain",
+    "text_cn" : "中雨"
+  },
+  "307":{
+    "day" : "18",
+    "night" : "18",
+    "text" : "Light Rain",
+    "text_cn" : "大雨"
+  },
+  "309":{
+    "day" : "17",
+    "night" : "17",
+    "text" : "Drizzle Rain",
+    "text_cn" : "毛毛雨"
+  },
+  "502":{
+    "day" : "13",
+    "night" : "13",
+    "text" : "Haze",
+    "text_cn" : "霾"
+  }
+}
