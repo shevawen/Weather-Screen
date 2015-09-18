@@ -1,5 +1,6 @@
 (function(){
   var heweather_key = '980756f87f1c4abda8f03cd3ed84b342';
+  var aspect_ratio = 1.73
   var screens,weather_code;
   var topo,projection,path,svg,g,texture,graticule,zoom;
   var width,height;
@@ -14,7 +15,7 @@
     d3.select(window).on("resize", throttle);
     zoom = d3.behavior.zoom().scaleExtent([1, 35]);
     width = document.getElementById('container').offsetWidth;
-    height = width / 1.73;
+    height = width / aspect_ratio;
     graticule = d3.geo.graticule();
 
     texture = textures.lines()
@@ -74,20 +75,23 @@
             screens[i][j].data = arguments[m ++][0]['HeWeather data service 3.0'][0];
           }
         }
+        runOnce();
         window.clearInterval(screenrun);
-        screenrun = window.setInterval(function() {
-          g.selectAll(".gpoint").transition()
-              .ease("linear")
-              .duration(200)
-              .style("opacity", 0.4)
-              .each('end',function(){
-                this.remove();
-              });
-          viewParam = getViewParam(screens[screenIndex]);
-          changeView(renderWeather);
-        }, 5000);
+        screenrun = window.setInterval(runOnce, 5000);
       });
     });
+
+  }
+  function runOnce(){
+    g.selectAll(".gpoint").transition()
+        .ease("linear")
+        .duration(200)
+        .style("opacity", 0.4)
+        .each('end',function(){
+          this.remove();
+        });
+    viewParam = getViewParam(screens[screenIndex]);
+    changeView(renderWeather);
 
   }
   function defineDropshadow(){
@@ -131,22 +135,28 @@
 
   function renderWeather(){
       for(var i = 0; i < screens[screenIndex].length; i ++){
-        var city = screens[screenIndex][i];
-        var basic = city.data.basic;
-        var weather = city.data.daily_forecast[0];
-        var now = new Date();
-        var _weather_code = (now.getHours() > 17 && now.getHours() < 6) ?
-          weather_code[weather.cond.code_d].day : weather_code[weather.cond.code_d].night;
+        try {
+          var city = screens[screenIndex][i];
+          var basic = city.data.basic;
+          var weather = city.data.daily_forecast[0];
+          var now = new Date();
+          console.log(city);
+          console.log(weather);
+          console.log(weather.cond.code_d);
+          var _weather_code = (now.getHours() > 17 || now.getHours() < 6) ?
+            weather_code[weather.cond.code_d].day : weather_code[weather.cond.code_d].night;
 
-        console.log(weather.cond.code_d);
-        addpoint(
-          basic.lon,
-          basic.lat,
-          basic.city,
-          _weather_code,
-          weather.tmp.max,
-          weather.tmp.min,
-          city.card_positon);
+          addpoint(
+            basic.lon,
+            basic.lat,
+            basic.city,
+            _weather_code,
+            weather.tmp.max,
+            weather.tmp.min,
+            city.card_positon);
+        }catch(error){
+          console.log(error);
+        }
       }
       screenIndex + 1 == screens.length ? screenIndex = 0 : screenIndex ++;
   }

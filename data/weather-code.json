@@ -77,6 +77,12 @@
     "text" : "Heavy Shower Rain",
     "text_cn" : "强阵雨"
   },
+  "302":{
+    "day" : "27",
+    "night" : "27",
+    "text" : "Thundershower",
+    "text_cn" : "雷阵雨"
+  },
   "305":{
     "day" : "17",
     "night" : "17",

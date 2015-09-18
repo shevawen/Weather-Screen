@@ -1,4 +1,4 @@
-Weather Screen is a forecast viewer design for non-interactive screens.
+Weather Screen is a forecast viewer designed for non-interactive screens.
 
 ## Usage
 
@@ -42,7 +42,7 @@ npm install
 
 ## Data Source
 
-The forecast data is fetch from heweather.com.
+The forecast data is fetch from [heweather.com](http://heweather.com).
 You can register an account to get a free license of data API.
 Replace the value of `heweather_key` in `weather-screen.js` by your own key.
 
@@ -52,6 +52,31 @@ Weather Screen 是为非交互性屏幕(比如电视)设计的天气显示界面
 ## 用法
 
 这是一个静态的单页应用，直接发布在任何 Web Server 中即可。
+
+在 `data/screens.json` 中设置你需要展示的城市.
+
+```
+[
+  [
+    {"name" :"London,United Kingdom","card_positon" : "t"},
+    {"name" :"Buenos Aires","card_positon" : "b"},
+    {"name" :"石家庄","card_positon" : "b"},
+    {"name" :"太原","card_positon" : "t"},
+    {"name" :"济南","card_positon" : "t"},
+    {"name" :"呼和浩特","card_positon" : "b"}
+    // 更多城市，至少两个.
+  ],
+  [
+    {"name" :"北京","card_positon" : "t"},
+    {"name" :"天津","card_positon" : "b"},
+    {"name" :"石家庄","card_positon" : "b"},
+    {"name" :"太原","card_positon" : "t"},
+    {"name" :"济南","card_positon" : "t"},
+    {"name" :"呼和浩特","card_positon" : "b"}
+  ]
+  // 更多屏幕.
+]
+```
 
 ## 开发
 
@@ -67,5 +92,5 @@ npm install
 
 ## 数据源
 
-预报数据来自 [和风天气](heweather.com).
+预报数据来自 [和风天气](http://heweather.com).
 你可以在该网站上注册一个账户，注册后可以获得一个免费的授权，然后用获得的 Key 替换 `weather-screen.js` 里的 `heweather_key`
