@@ -1,3 +1,5 @@
+# Weather Screen
+
 Weather Screen is a forecast viewer designed for non-interactive screens.
 
 ## Usage
@@ -46,6 +48,7 @@ The forecast data is fetch from [heweather.com](http://heweather.com).
 You can register an account to get a free license of data API.
 Replace the value of `heweather_key` in `weather-screen.js` by your own key.
 
+# Weather Screen
 
 Weather Screen 是为非交互性屏幕(比如电视)设计的天气显示界面，可以通过切换场景显示多个定制城市的天气预报。
 

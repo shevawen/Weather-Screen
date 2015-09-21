@@ -6,6 +6,7 @@
   var width,height;
   var screenrun,screenIndex,viewParam;
   var loadScreens,loadWeatherCond,loadCountries;
+  var msg;
 
   init();
   setup();
@@ -60,22 +61,23 @@
     svg.call(texture);
 
     g = svg.append("g");
-
+    msg = Messenger().post("Loading resource.");
     $.when(loadScreens, loadWeatherCond, loadCountries).done(function(result0, result1, result2){
+      msg.update("Resource loaded.");
       screens = result0[0];
       weather_code = result1[0];
       countries = topojson.feature(result2[0], result2[0].objects.countries).features;
       topo = countries;
       draw(topo);
-
+      msg.update("Loading forecast.");
       $.when.apply(null,loadWeatherDatas()).done(function(){
+        msg.update("Forecast loaded.");
         var m = 0;
         for (var i = 0; i < screens.length; i++) {
           for (var j = 0; j < screens[i].length; j++) {
             screens[i][j].data = arguments[m ++][0]['HeWeather data service 3.0'][0];
           }
         }
-        runOnce();
         window.clearInterval(screenrun);
         screenrun = window.setInterval(runOnce, 5000);
       });
@@ -144,7 +146,7 @@
           console.log(weather);
           console.log(weather.cond.code_d);
           var _weather_code = (now.getHours() > 17 || now.getHours() < 6) ?
-            weather_code[weather.cond.code_d].day : weather_code[weather.cond.code_d].night;
+            weather_code[weather.cond.code_d].night : weather_code[weather.cond.code_d].day;
 
           addpoint(
             basic.lon,
@@ -220,9 +222,10 @@
   function redraw() {
     width = document.getElementById('container').offsetWidth;
     height = width / 2;
-    d3.select('svg').remove();
-    setup();
-    draw(topo);
+    // d3.select('svg').remove();
+    // setup();
+    // draw(topo);
+    svg.attr("width", width).attr("height", height);
   }
   function changeView(func){
 
@@ -235,7 +238,8 @@
         .style("stroke-width", 1 / viewParam.scale + "px")
         .attr("transform", "translate(" + translate + ")scale(" + viewParam.scale + ")")
         .each('end',func);
-    d3.selectAll(".country").style("stroke-width", 1.5 / viewParam.scale);
+    d3.selectAll(".country").transition()
+        .duration(750).style("stroke-width", 1.5 / viewParam.scale);
   }
 
 
