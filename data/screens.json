@@ -53,9 +53,6 @@
       "name" :"武汉",
       "card_positon" : "t"
     },{
-      "name" :"长沙",
-      "card_positon" : "t"
-    },{
       "name" :"南昌",
       "card_positon" : "t"
     }
@@ -78,11 +75,11 @@
       "name" :"澳门",
       "card_positon" : "b"
     },{
-      "name" :"南宁",
-      "card_positon" : "t"
-    },{
       "name" :"海口",
       "card_positon" : "b"
+    },{
+      "name" :"长沙",
+      "card_positon" : "t"
     }
   ]
   ,
@@ -101,6 +98,9 @@
     },{
       "name" :"拉萨",
       "card_positon" : "b"
+    },{
+      "name" :"南宁",
+      "card_positon" : "t"
     }
   ],[
     {

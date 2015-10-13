@@ -1,19 +1,22 @@
 {
   "name": "weather-screen",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "A forecast view designed for non-interactive screens.",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "keywords": [
     "weather",
     "forecast",
     "d3"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shevawen/Weather-Screen.git"
+  },
   "author": "sheva.wen",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
+    "browser-sync": "^2.9.11",
+    "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
     "gulp-uglify": "^1.4.1"
   }

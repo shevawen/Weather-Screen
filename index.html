@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <meta http-equiv="refresh" content="3000" />
-<title>Forecast view designed for non-interactive screens</title>
+<title>Weather Screen - A forecast viewer designed for non-interactive screens.</title>
 <style>
 .country {
   stroke: #fff;
@@ -12,7 +12,7 @@
   border-radius: 5px;
   height:100%;
   overflow:hidden;
-  background: #F0F8FF;
+  background: #9EABC8; //color of sea
 }
 .graticule {
   fill: none;
@@ -31,25 +31,17 @@ text {
   font-family: "Microsoft YaHei", sans-serif;
 }
 </style>
-<link rel="stylesheet" href="bower_components/messenger/build/css/messenger.css" media="screen">
-<link rel="stylesheet" href="bower_components/messenger/build/css/messenger-theme-flat.css" media="screen">
+<link rel="stylesheet" href="build/lib.css" media="screen">
 </head>
 <body>
   <div id="container"></div>
-  <script src="bower_components/jquery/dist/jquery.js"></script>
-  <script src="bower_components/d3/d3.min.js"></script>
-  <script src="bower_components/topojson/topojson.js"></script>
-  <script src="bower_components/messenger/build/js/messenger.js"></script>
-  <script src="bower_components/messenger/build/js/messenger-theme-flat.js"></script>
-
-  <script src="bower_components/textures/textures.min.js"></script>
+  <script src="build/lib.js"></script>
   <script type="text/javascript">
-  Messenger.options = {
-    extraClasses: 'messenger-fixed messenger-on-bottom messenger-on-right',
-    theme: 'flat'
-  }
-
+    Messenger.options = {
+      extraClasses: 'messenger-fixed messenger-on-bottom messenger-on-right',
+      theme: 'flat'
+    }
   </script>
-  <script src="weather-screen.js"></script>
+  <script src="build/weather-screen.js"></script>
 </body>
 </html>

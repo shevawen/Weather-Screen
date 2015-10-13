@@ -21,8 +21,8 @@
 
     texture = textures.lines()
       .orientation("diagonal")
-      .size(40)
-      .strokeWidth(26)
+      .size(4)
+      .strokeWidth(1)
       .stroke("#9bc9d3")
       .background("#0096c4");
 
@@ -104,7 +104,7 @@
 
     filter.append("feGaussianBlur")
         .attr("in", "SourceAlpha")
-        .attr("stdDeviation", 3)
+        .attr("stdDeviation", 30)
         .attr("result", "offsetblur");
     filter.append("feOffset")
         .attr("in", "blur")
@@ -239,7 +239,7 @@
         .attr("transform", "translate(" + translate + ")scale(" + viewParam.scale + ")")
         .each('end',func);
     d3.selectAll(".country").transition()
-        .duration(750).style("stroke-width", 1.5 / viewParam.scale);
+        .duration(750).style("stroke-width", 1 / viewParam.scale);
   }
 
 
@@ -263,7 +263,8 @@
   //function to add points and text to the map (used in plotting capitals)
   function addpoint(lon,lat,city,cond,tmpmax,tmpmin,card_positon) {
     var csize = 36;
-    var cgap = 4;
+    var cgap = 2;
+    var city_label_size = 20;
     var coffsetY = (card_positon == 'b' ? 12 :  - 12 - csize);
     var pointr = 6
     var x = projection([lon,lat])[0];
@@ -332,7 +333,7 @@
     gpoint.append("text")
           .attr("x", 16)
           .attr("y", 6)
-          .attr("font-size", 16)
+          .attr("font-size", city_label_size)
           .attr("fill", "#000000")
           .text(city);
 
