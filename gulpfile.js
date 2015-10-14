@@ -7,16 +7,14 @@ var browserSync = require('browser-sync').create();
  * Copy the bower packages
  */
 gulp.task('vendor', function() {
-    gulp.src(['bower_components/jquery/dist/jquery.js',
-            'bower_components/d3/d3.min.js',
-            'bower_components/topojson/topojson.js',
-            'bower_components/messenger/build/js/messenger.js',
-            'bower_components/messenger/build/js/messenger-theme-flat.js',
-            'bower_components/textures/textures.min.js'])
+    gulp.src(['node_modules/jquery/dist/jquery.js',
+            'node_modules/d3/d3.min.js',
+            'node_modules/topojson/topojson.js',
+            'node_modules/toastr/toastr.js',
+            'node_modules/textures/textures.min.js'])
             .pipe(concat('lib.js'))
             .pipe(gulp.dest('build'));
-    gulp.src(['bower_components/messenger/build/css/messenger.css',
-            'bower_components/messenger/build/css/messenger-theme-flat.css'])
+    gulp.src(['node_modules/toastr/build/toastr.css'])
             .pipe(concat('lib.css'))
             .pipe(gulp.dest('build'));
 });

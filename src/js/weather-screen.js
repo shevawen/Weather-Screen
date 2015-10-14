@@ -21,7 +21,7 @@
 
     texture = textures.lines()
       .orientation("diagonal")
-      .size(4)
+      .size(8)
       .strokeWidth(1)
       .stroke("#9bc9d3")
       .background("#0096c4");
@@ -61,17 +61,21 @@
     svg.call(texture);
 
     g = svg.append("g");
-    msg = Messenger().post("Loading resource.");
+    toastr.warning("Loading resource.");
+    //TODO switch to https://github.com/mbostock/queue
     $.when(loadScreens, loadWeatherCond, loadCountries).done(function(result0, result1, result2){
-      msg.update("Resource loaded.");
+      toastr.clear();
+      toastr.success("Resource loaded.");
       screens = result0[0];
       weather_code = result1[0];
       countries = topojson.feature(result2[0], result2[0].objects.countries).features;
       topo = countries;
       draw(topo);
-      msg.update("Loading forecast.");
+      toastr.clear();
+      toastr.warning("Loading forecast.");
       $.when.apply(null,loadWeatherDatas()).done(function(){
-        msg.update("Forecast loaded.");
+        toastr.clear();
+        toastr.success("Forecast loaded.");
         var m = 0;
         for (var i = 0; i < screens.length; i++) {
           for (var j = 0; j < screens[i].length; j++) {

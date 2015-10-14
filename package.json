@@ -19,5 +19,12 @@
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
     "gulp-uglify": "^1.4.1"
+  },
+  "dependencies": {
+    "d3": "^3.5.6",
+    "jquery": "^2.1.4",
+    "textures": "^1.0.3",
+    "toastr": "^2.1.2",
+    "topojson": "^1.6.19"
   }
 }
