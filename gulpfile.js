@@ -11,7 +11,8 @@ gulp.task('vendor', function() {
             'node_modules/d3/d3.min.js',
             'node_modules/topojson/topojson.js',
             'node_modules/toastr/toastr.js',
-            'node_modules/textures/textures.min.js'])
+            'node_modules/textures/textures.min.js',
+            'node_modules/dat.gui/build/dat.gui.js'])
             .pipe(concat('lib.js'))
             .pipe(gulp.dest('build'));
     gulp.src(['node_modules/toastr/build/toastr.css'])

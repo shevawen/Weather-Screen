@@ -1,12 +1,36 @@
 (function(){
   var heweather_key = '980756f87f1c4abda8f03cd3ed84b342';
-  var aspect_ratio = 1.73
   var screens,weather_code;
   var topo,projection,path,svg,g,texture,graticule,zoom;
   var width,height;
   var screenrun,screenIndex,viewParam;
-  var loadScreens,loadWeatherCond,loadCountries;
+  var loadWeatherCond,loadCountries;
   var msg;
+
+  var GuiConfig = function() {
+    this["Screens"] = "北京,天津,石家庄,太原,济南,呼和浩特|北京,沈阳,长春,哈尔滨|南京,合肥,上海,杭州,郑州,武汉,南昌|台北,福州,广州,香港,海口,长沙|贵阳,昆明,成都,重庆,拉萨,南宁|银川,西安,兰州,乌鲁木齐,西宁|乌海,阿左旗,东胜,包头,呼和浩特,临河,集宁,二连浩特|锡林浩特,通辽,赤峰,乌兰浩特,海拉尔,满洲里|巴黎,Ulan Bator,纽约,Buenos Aires,东京,开普敦,新德里,莫斯科";
+    this["Interval"] = 5.0;
+    this["Browse Source"] = function() {
+        window.location.href = 'https://github.com/shevawen/Weather-Screen';
+    };
+  }
+
+  var config = new GuiConfig();
+  var gui = new dat.GUI();
+  var screensGUI = gui.add(config, 'Screens');
+  var intervalGUI = gui.add(config, 'Interval').min(5.0).max(20.0).step(0.1);
+  gui.add(config, 'Browse Source');
+
+  screensGUI.onChange(function(value) {
+    setup();
+  });
+  intervalGUI.onChange(function(value) {
+    window.clearInterval(screenrun);
+    screenrun = window.setInterval(runOnce, value * 1000);
+  });
+
+
+  gui.remember(config);
 
   init();
   setup();
@@ -15,8 +39,8 @@
   function init(){
     d3.select(window).on("resize", throttle);
     zoom = d3.behavior.zoom().scaleExtent([1, 35]);
-    width = document.getElementById('container').offsetWidth;
-    height = width / aspect_ratio;
+    width = window.innerWidth;
+    height = window.innerHeight;
     graticule = d3.geo.graticule();
 
     texture = textures.lines()
@@ -26,13 +50,28 @@
       .stroke("#9bc9d3")
       .background("#0096c4");
 
-    screenIndex  = 0;
+    projection = d3.geo.mercator().rotate([-160, 0, 0])
+      .translate([(width/2), (height/2)])
+      .scale( width / 2 / Math.PI);
 
-    loadScreens =
-      $.ajax({
-            url : 'data/screens.json',
-            dataType : 'json'
-      });
+    path = d3.geo.path().projection(projection);
+
+    svg = d3.select("#container").append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .call(zoom)
+        .append("g");
+    defineDropshadow();
+    svg.call(texture);
+
+    g = svg.append("g");
+
+
+    // loadScreens =
+    //   $.ajax({
+    //         url : 'data/screens.json',
+    //         dataType : 'json'
+    //   });
     loadWeatherCond =
       $.ajax({
             url : 'data/weather-code.json',
@@ -45,30 +84,19 @@
       });
   }
   function setup(){
-    projection = d3.geo.mercator().rotate([-160, 0, 0])
-      .translate([(width/2), (height/2)])
-      .scale( width / 2 / Math.PI);
 
-    path = d3.geo.path().projection(projection);
+    g.selectAll("*").remove();
+    screenIndex  = 0;
 
-    svg = d3.select("#container").append("svg")
-        .attr("width", width)
-        .attr("height", height)
-        .call(zoom)
-        .on("click", click)
-        .append("g");
-    defineDropshadow();
-    svg.call(texture);
+    screens = screenConfigParse(config.Screens);
 
-    g = svg.append("g");
     toastr.warning("Loading resource.");
     //TODO switch to https://github.com/mbostock/queue
-    $.when(loadScreens, loadWeatherCond, loadCountries).done(function(result0, result1, result2){
+    $.when(loadWeatherCond, loadCountries).done(function(result0, result1){
       toastr.clear();
       toastr.success("Resource loaded.");
-      screens = result0[0];
-      weather_code = result1[0];
-      countries = topojson.feature(result2[0], result2[0].objects.countries).features;
+      weather_code = result0[0];
+      countries = topojson.feature(result1[0], result1[0].objects.countries).features;
       topo = countries;
       draw(topo);
       toastr.clear();
@@ -83,7 +111,7 @@
           }
         }
         window.clearInterval(screenrun);
-        screenrun = window.setInterval(runOnce, 5000);
+        screenrun = window.setInterval(runOnce, config["Interval"] * 1000);
       });
     });
 
@@ -105,23 +133,24 @@
 
     var filter = defs.append("filter")
         .attr("id", "dropshadow")
-
-    filter.append("feGaussianBlur")
-        .attr("in", "SourceAlpha")
-        .attr("stdDeviation", 30)
-        .attr("result", "offsetblur");
+        .attr("x", "-36")
+        .attr("y", "-36")
+        .attr("width", "108")
+        .attr("height", "108");
     filter.append("feOffset")
-        .attr("in", "blur")
-        .attr("dx", 2)
-        .attr("dy", 2)
+        .attr("in", "SourceAlpha")
+        .attr("result", "offOut")
+        .attr("dx", 0)
+        .attr("dy", 0)
         .attr("result", "offsetBlur");
-
-    var feMerge = filter.append("feMerge");
-
-    feMerge.append("feMergeNode")
-        .attr("in", "offsetBlur")
-    feMerge.append("feMergeNode")
-        .attr("in", "SourceGraphic");
+    filter.append("feGaussianBlur")
+        .attr("in", "offOut")
+        .attr("stdDeviation", 120)
+        .attr("result", "blurOut");
+    filter.append("feBlend")
+        .attr("in", "SourceGraphic")
+        .attr("in2", "blurOut")
+        .attr("mode", "normal");
   }
 
   function loadWeatherDatas(){
@@ -181,9 +210,10 @@
       Math.max.apply(null, xs),
       Math.max.apply(null, ys)
     ]
-    var center = projection.invert([(bbox[0] + bbox[2]) / 2, (bbox[1] + bbox[3]) / 2]);
 
-    var scale = Math.min(width * 0.8 / Math.abs(bbox[2] - bbox[0]), height * 0.8 / Math.abs(bbox[3] - bbox[1]));
+    var scale = Math.min((width - 200)/ Math.abs(bbox[2] - bbox[0]), (height - 200) / Math.abs(bbox[3] - bbox[1]));
+
+    var center = projection.invert([(bbox[0] + bbox[2]) / 2, (bbox[1] + bbox[3]) / 2]);
 
     return {
       'center' : center,
@@ -257,63 +287,45 @@
   }
 
 
-  //geo translation on mouse click in map
-  function click() {
-    var latlon = projection.invert(d3.mouse(this));
-    console.log(latlon);
-  }
-
-
   //function to add points and text to the map (used in plotting capitals)
   function addpoint(lon,lat,city,cond,tmpmax,tmpmin,card_positon) {
     var csize = 36;
-    var cgap = 2;
-    var city_label_size = 20;
-    var coffsetY = (card_positon == 'b' ? 12 :  - 12 - csize);
-    var pointr = 6
+    var cgap = 1;
+    var city_label_size = 30;
+    var coffsetY = csize;
     var x = projection([lon,lat])[0];
     var y = projection([lon,lat])[1];
     var gpoint = g.append("g").attr("class", "gpoint");
-    gpoint.attr('transform',"skewX(20)translate(" + x + "," + y + ")scale(" + 1 / viewParam.scale + ")")
-    .transition()
-  	.ease("linear")
-  	.duration(200)
-    .attr('transform',"skewX(0)translate(" + x + "," + y + ")scale(" + 1 / viewParam.scale + ")");
 
-    gpoint.append("svg:circle")
-          .attr("cx", 2)
-          .attr("cy", 0)
-          .attr("r", pointr)
-          .attr("fill","#ff9900")
-          .attr("stroke","#ffffff")
-          .attr("stroke-width",2)
-          .attr("class","point");
     gpoint.append("svg:rect")
-          .attr("x", 0 - pointr)
+          .attr("x", 0)
           .attr("y", coffsetY)
           .attr("width", csize)
           .attr("height", csize)
-          .attr("fill",cond == '02' ? "#d9386e" : "#5967b7")
+          .attr("fill", cond == '02' ? "#d9386e" : "#5967b7")
           .attr("class","point")
-          .attr("filter", "url(#dropshadow)");
+          //.attr("filter", "url(#dropshadow)")
+          ;
     gpoint.append("svg:rect")
-          .attr("x", (csize + cgap) - pointr)
+          .attr("x", csize + cgap)
           .attr("y", coffsetY)
           .attr("width", csize)
           .attr("height", csize)
           .attr("fill","#56617f")
           .attr("class","point")
-          .attr("filter", "url(#dropshadow)");
+          //.attr("filter", "url(#dropshadow)")
+          ;
     gpoint.append("svg:rect")
-          .attr("x", (csize + cgap) * 2 - pointr)
+          .attr("x", (csize + cgap) * 2)
           .attr("y", coffsetY)
           .attr("width", csize)
           .attr("height", csize)
           .attr("fill","#3c2f38")
           .attr("class","point")
-          .attr("filter", "url(#dropshadow)");
+          //.attr("filter", "url(#dropshadow)")
+          ;
     gpoint.append("image")
-          .attr("x", 0 - pointr)
+          .attr("x", 0)
           .attr("y", coffsetY)
           .attr("width", csize)
           .attr("height", csize)
@@ -321,25 +333,55 @@
           .attr("class","point");
 
     gpoint.append("text")
-          .attr("x", (csize + cgap) - pointr + csize / 2)
+          .attr("x", (csize + cgap) + csize / 2)
           .attr("y", coffsetY + csize - 12 )
           .attr("text-anchor", 'middle')
           .attr("font-size", 24)
           .attr("fill", "#ffffff")
           .text(tmpmax);
     gpoint.append("text")
-          .attr("x", (csize + cgap) * 2 - pointr + csize / 2)
+          .attr("x", (csize + cgap) * 2 + csize / 2)
           .attr("y", coffsetY + csize - 12 )
           .attr("text-anchor", 'middle')
           .attr("font-size", 24)
           .attr("fill", "#ffffff")
           .text(tmpmin);
     gpoint.append("text")
-          .attr("x", 16)
-          .attr("y", 6)
+          .attr("x", 0)
+          .attr("y", city_label_size)
           .attr("font-size", city_label_size)
-          .attr("fill", "#000000")
+          .attr("fill", "#1D2A32")
           .text(city);
+    //TOOD resolve the performance promble.
+    //gpoint.attr("filter", "url(#dropshadow)");
 
+
+    // gpoint.style('transform', 'skewX(20)translate(' + x + ',' + y + ')scale(' + 1 / viewParam.scale + ')')
+    //   .transition()
+    //   .ease("linear")
+    //   .duration(200)
+    //   .style('transform', 'skewX(0)translate(' + x + ',' + y + ')scale(' + 1 / viewParam.scale + ')');
+
+    gpoint.attr('transform',"skewX(20)translate(" + x + "," + y + ")scale(" + 1 / viewParam.scale + ")")
+      .transition()
+    	.ease("linear")
+    	.duration(200)
+      .attr('transform',"skewX(0)translate(" + x + "," + y + ")scale(" + 1 / viewParam.scale + ")")
+      .each('end', function(){
+        //d3.select(this).attr("filter", "url(#dropshadow)");
+      });
+  }
+  function screenConfigParse(str){
+    var screens = [];
+    str.split('|').forEach(function(screen){
+      var cities = [];
+      screen.split(',').forEach(function(city){
+        cities.push({
+          'name':city
+        });
+      });
+      screens.push(cities);
+    })
+    return screens;
   }
 })();
