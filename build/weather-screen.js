@@ -25,8 +25,8 @@
     setup();
   });
   intervalGUI.onChange(function(value) {
-    window.clearInterval(screenrun);
-    screenrun = window.setInterval(runOnce, value * 1000);
+    //window.clearInterval(screenrun);
+    d3.timer(runOnce, value * 1000);
   });
 
 
@@ -110,8 +110,8 @@
             screens[i][j].data = arguments[m ++][0]['HeWeather data service 3.0'][0];
           }
         }
-        window.clearInterval(screenrun);
-        screenrun = window.setInterval(runOnce, config["Interval"] * 1000);
+        //window.clearInterval(screenrun);
+        d3.timer(runOnce, config["Interval"] * 1000);
       });
     });
 
@@ -125,18 +125,22 @@
           this.remove();
         });
     viewParam = getViewParam(screens[screenIndex]);
-    changeView(renderWeather);
+    changeView(function(){
+      renderWeather();
 
+      d3.timer(runOnce, config["Interval"] * 1000);
+    });
+    return true;
   }
   function defineDropshadow(){
     var defs = svg.append("defs");
 
     var filter = defs.append("filter")
         .attr("id", "dropshadow")
-        .attr("x", "-36")
-        .attr("y", "-36")
-        .attr("width", "108")
-        .attr("height", "108");
+        .attr("x", "-300%")
+        .attr("y", "-300%")
+        .attr("width", "600%")
+        .attr("height", "600%");
     filter.append("feOffset")
         .attr("in", "SourceAlpha")
         .attr("result", "offOut")
@@ -145,7 +149,7 @@
         .attr("result", "offsetBlur");
     filter.append("feGaussianBlur")
         .attr("in", "offOut")
-        .attr("stdDeviation", 120)
+        .attr("stdDeviation", "72")
         .attr("result", "blurOut");
     filter.append("feBlend")
         .attr("in", "SourceGraphic")
@@ -189,17 +193,23 @@
             weather.tmp.max,
             weather.tmp.min,
             city.card_positon);
+
         }catch(error){
-          console.log(error);
+          console.error(error);
         }
       }
       screenIndex + 1 == screens.length ? screenIndex = 0 : screenIndex ++;
   }
   function getViewParam(datas){
     var xs = [],ys = [];
+    var lon,lat;
     for(var i = 0; i < datas.length; i ++){
-      var lon = datas[i].data.basic.lon - 0;
-      var lat = datas[i].data.basic.lat - 0;
+      try {
+        lon = datas[i].data.basic.lon - 0;
+        lat = datas[i].data.basic.lat - 0;
+      } catch (e) {
+        continue;
+      }
       var xy = projection([lon, lat]);
       xs.push(xy[0]);
       ys.push(xy[1]);
@@ -362,13 +372,13 @@
     //   .duration(200)
     //   .style('transform', 'skewX(0)translate(' + x + ',' + y + ')scale(' + 1 / viewParam.scale + ')');
 
-    gpoint.attr('transform',"skewX(20)translate(" + x + "," + y + ")scale(" + 1 / viewParam.scale + ")")
+    gpoint.attr('transform',"skewX(0)translate(" + x + "," + y + ")scale(" + 1 / viewParam.scale + ")");
+
+    gpoint.style("opacity", 0.1)
       .transition()
-    	.ease("linear")
-    	.duration(200)
-      .attr('transform',"skewX(0)translate(" + x + "," + y + ")scale(" + 1 / viewParam.scale + ")")
-      .each('end', function(){
-        //d3.select(this).attr("filter", "url(#dropshadow)");
+      .style("opacity", 1)
+      .each("end", function(){
+
       });
   }
   function screenConfigParse(str){

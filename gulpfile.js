@@ -8,10 +8,10 @@ var browserSync = require('browser-sync').create();
  */
 gulp.task('vendor', function() {
     gulp.src(['node_modules/jquery/dist/jquery.js',
-            'node_modules/d3/d3.min.js',
+            'node_modules/d3/d3.js',
             'node_modules/topojson/topojson.js',
             'node_modules/toastr/toastr.js',
-            'node_modules/textures/textures.min.js',
+            'node_modules/textures/textures.js',
             'node_modules/dat.gui/build/dat.gui.js'])
             .pipe(concat('lib.js'))
             .pipe(gulp.dest('build'));
