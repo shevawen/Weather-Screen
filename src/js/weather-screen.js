@@ -3,7 +3,7 @@
   var screens,weather_code;
   var topo,projection,path,svg,g,texture,graticule,zoom;
   var width,height;
-  var screenrun,screenIndex,viewParam;
+  var screenrun,screenIndex,viewParam,timer;
   var loadWeatherCond,loadCountries;
   var msg;
 
@@ -26,7 +26,9 @@
   });
   intervalGUI.onChange(function(value) {
     //window.clearInterval(screenrun);
-    d3.timer(runOnce, value * 1000);
+    if(timer){
+      timer.restart(runOnce, value * 1000);
+    }
   });
 
 
@@ -111,7 +113,11 @@
           }
         }
         //window.clearInterval(screenrun);
-        d3.timer(runOnce, config["Interval"] * 1000);
+        if(timer){
+          timer.restart(runOnce, value * 1000);
+        }else{
+          timer = d3.timer(runOnce, config["Interval"] * 1000);
+        }
       });
     });
 
