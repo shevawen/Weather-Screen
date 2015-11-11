@@ -27,7 +27,7 @@
   intervalGUI.onChange(function(value) {
     //window.clearInterval(screenrun);
     if(timer){
-      timer.restart(runOnce, value * 1000);
+      timer.restart(move, value * 1000);
     }
   });
 
@@ -114,15 +114,15 @@
         }
         //window.clearInterval(screenrun);
         if(timer){
-          timer.restart(runOnce, value * 1000);
+          timer.restart(move, value * 1000);
         }else{
-          timer = d3.timer(runOnce, config["Interval"] * 1000);
+          timer = d3.timer(move, config["Interval"] * 1000);
         }
       });
     });
 
   }
-  function runOnce(){
+  function move(){
     g.selectAll(".gpoint").transition()
         .ease("linear")
         .duration(200)
@@ -134,7 +134,7 @@
     changeView(function(){
       renderWeather();
 
-      d3.timer(runOnce, config["Interval"] * 1000);
+      d3.timer(move, config["Interval"] * 1000);
     });
     return true;
   }
