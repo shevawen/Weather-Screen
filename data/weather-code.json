@@ -107,6 +107,36 @@
     "text" : "Drizzle Rain",
     "text_cn" : "毛毛雨"
   },
+  "400":{
+    "day" : "21",
+    "night" : "21",
+    "text" : "Light Snow",
+    "text_cn" : "小雪"
+  },
+  "401":{
+    "day" : "21",
+    "night" : "21",
+    "text" : "Moderate Snow",
+    "text_cn" : "中雪"
+  },
+  "402":{
+    "day" : "23",
+    "night" : "23",
+    "text" : "Heavy Snow",
+    "text_cn" : "大雪"
+  },
+  "403":{
+    "day" : "24",
+    "night" : "24",
+    "text" : "Snowstorm",
+    "text_cn" : "暴雪"
+  },
+  "404":{
+    "day" : "95",
+    "night" : "95",
+    "text" : "Snowstorm",
+    "text_cn" : "雨夹雪"
+  },
   "502":{
     "day" : "13",
     "night" : "13",
